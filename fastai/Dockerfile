@@ -1,7 +1,7 @@
 FROM yinyang/conda
 
 RUN /opt/conda/bin/conda install -y \
-      cudatoolkit=10.1 cudnn
+      cudatoolkit=10.2 cudnn
 
 RUN /opt/conda/bin/conda install -yc pytorch pytorch torchvision torchaudio
 

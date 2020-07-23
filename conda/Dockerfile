@@ -19,7 +19,7 @@ RUN /opt/conda/bin/conda install -yc conda-forge \
       xgboost lightgbm catboost mlxtend shap lime \
       uvicorn starlette aiohttp \
       tensorboardx cython-blis libjpeg-turbo \
-      ffmpeg-python youtube-dl librosa libsixel-python \
+      ffmpeg-python youtube-dl librosa \
       omegaconf fire python-graphviz pydicom pycocotools
 
 RUN /opt/conda/bin/ipcluster nbextension enable
