@@ -9,16 +9,15 @@ RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86
 
 RUN /opt/conda/bin/conda install -y \
       jupyter ipyparallel \
-      seaborn plotly tensorboard \
-      scikit-learn scikit-image graphviz opencv ffmpeg pydot beautifulsoup4 dask dask-image \
-      cython future pyarrow munch \
-      coverage pytest-mock \
+      seaborn plotly scikit-learn scikit-image graphviz ffmpeg pydot dask dask-image beautifulsoup4 tensorboard opencv \
+      future munch pyarrow h5py cython \
+      coverage pytest-mock mock \
       keyrings.alt
 
 RUN /opt/conda/bin/conda install -yc conda-forge \
       xgboost lightgbm catboost mlxtend shap lime \
       uvicorn starlette aiohttp \
-      tensorboardx cython-blis libjpeg-turbo \
+      tensorboardx cython-blis libjpeg-turbo jupyter_contrib_nbextensions \
       ffmpeg-python youtube-dl librosa \
       omegaconf fire python-graphviz pydicom pycocotools
 

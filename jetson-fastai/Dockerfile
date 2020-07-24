@@ -12,7 +12,9 @@ RUN unzip torchvision.zip && rm torchvision.zip
 COPY torchaudio.zip /
 
 RUN unzip torchaudio.zip && rm torchaudio.zip
-    
+
+RUN /opt/conda/bin/conda install -yc conda-forge kornia
+
 RUN /opt/conda/bin/conda install -yc fastai nvidia-ml-py3
 
 RUN /opt/conda/bin/pip install --no-deps fastai fastai2
@@ -23,7 +25,7 @@ RUN /opt/conda/bin/pip install \
       libsixel-python fastdot \
       knockknock
 
-# object-detection-fastai 
+# object-detection-fastai kornia
 
 COPY grpcio-1.30.0-cp36-cp36m-linux_aarch64.whl /
 

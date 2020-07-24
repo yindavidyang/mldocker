@@ -11,6 +11,8 @@ RUN apt-get install -y \
         zip p7zip-full p7zip-rar pigz zlib1g-dev\
         imagemagick ffmpeg libjpeg-dev libturbojpeg libjpeg8-dev \
         iotop htop tmux ncdu vim \
+        libsixel-bin libsixel-dev libsixel1 \
+        docker.io docker-compose \
         libopenblas-dev gfortran liblapack-dev libblas-dev \
         libopenmpi2 openmpi-bin openmpi-common \
         sox libsox-dev libsox-fmt-all \
