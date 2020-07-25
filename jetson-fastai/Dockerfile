@@ -13,8 +13,6 @@ COPY torchaudio.zip /
 
 RUN unzip torchaudio.zip && rm torchaudio.zip
 
-RUN /opt/conda/bin/conda install -yc conda-forge kornia
-
 RUN /opt/conda/bin/conda install -yc fastai nvidia-ml-py3
 
 RUN /opt/conda/bin/pip install --no-deps fastai fastai2
