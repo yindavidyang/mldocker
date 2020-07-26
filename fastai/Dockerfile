@@ -9,7 +9,7 @@ RUN /opt/conda/bin/conda install -yc conda-forge kornia
 
 RUN /opt/conda/bin/conda install -yc fastai fastai
 
-RUN /opt/conda/bin/pip install -qq \
+RUN /opt/conda/bin/pip install \
       efficientnet-pytorch pretrainedmodels timm object-detection-fastai \
       gpustat \
       libsixel-python fastai2 fastdot \
