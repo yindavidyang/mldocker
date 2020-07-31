@@ -12,7 +12,7 @@ RUN /opt/conda/bin/conda install -yc fastai fastai
 RUN /opt/conda/bin/pip install \
       efficientnet-pytorch pretrainedmodels timm object-detection-fastai \
       gpustat \
-      libsixel-python fastai2 fastdot \
+      libsixel-python fastai2 fastdot transformers \
       knockknock
 
 RUN /opt/conda/bin/conda uninstall -y --force pillow pil jpeg libtiff libjpeg-turbo

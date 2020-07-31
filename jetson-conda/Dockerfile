@@ -17,7 +17,7 @@ RUN /opt/conda/bin/conda install -y \
     coverage pytest-mock mock \
     keyrings.alt \
     mlxtend lime \
-    tensorboardx cython-blis libjpeg-turbo jupyter_contrib_nbextensions \
+    tensorboardx cython-blis libjpeg-turbo \
     ffmpeg-python \
     omegaconf fire python-graphviz pydicom \
     bleach qtpy prometheus_client mistune terminado pyrsistent ipywidgets \
@@ -25,7 +25,7 @@ RUN /opt/conda/bin/conda install -y \
     keras-preprocessing keras-applications 
       
 RUN /opt/conda/bin/pip install \
-    jupyter \
+    jupyter jupyter_contrib_nbextensions \
     youtube-dl \
     lightgbm shap \
     uvicorn starlette aiohttp \
