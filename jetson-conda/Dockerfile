@@ -25,7 +25,7 @@ RUN /opt/conda/bin/conda install -y \
     keras-preprocessing keras-applications 
       
 RUN /opt/conda/bin/pip install \
-    jupyter jupyter_contrib_nbextensions \
+    jupyter_contrib_nbextensions \
     youtube-dl \
     lightgbm shap \
     uvicorn starlette aiohttp \

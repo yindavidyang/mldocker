@@ -5,7 +5,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y apt-utils
 RUN apt-get install -y \
         net-tools iputils-ping \
         build-essential cmake git \
-        curl wget gcp axel \
+        curl wget gcp axel pv \
         zip p7zip-full p7zip-rar pigz zlib1g-dev \
         imagemagick ffmpeg libjpeg-dev libturbojpeg libjpeg8-dev \
         iotop htop tmux ncdu vim \
