@@ -1,9 +1,9 @@
 FROM yinyang/jetson-conda
 
 RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate \
-    https://nvidia.box.com/shared/static/yr6sjswn25z7oankw8zy1roow9cy5ur1.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl && \
-    /opt/conda/bin/pip install torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl --verbose && \
-    rm torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
+    https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0-cp36-cp36m-linux_aarch64.whl && \
+    /opt/conda/bin/pip install torch-1.6.0-cp36-cp36m-linux_aarch64.whl --verbose && \
+    rm torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 
 COPY torchvision.zip /
 
@@ -21,7 +21,7 @@ RUN /opt/conda/bin/pip install \
       fastprogress \
       efficientnet-pytorch pretrainedmodels timm \
       libsixel-python fastdot \
-      knockknock
+      knockknock distro
 
 # object-detection-fastai kornia
 
@@ -36,6 +36,8 @@ RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certif
     rm grpcio-1.30.0-cp36-cp36m-linux_aarch64.whl
 
 COPY install_torchvision_torchaudio.sh /
+
+COPY sixel.py /opt/conda/lib/python3.7/site-packages/fastai/
 
 CMD /bin/bash install_torchvision_torchaudio.sh && \
     /bin/bash -c "rm install_torchvision_torchaudio.sh" && \
