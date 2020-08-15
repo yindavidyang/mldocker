@@ -42,3 +42,5 @@ COPY sixel.py /opt/conda/lib/python3.7/site-packages/fastai/
 CMD /bin/bash install_torchvision_torchaudio.sh && \
     /bin/bash -c "rm install_torchvision_torchaudio.sh" && \
     /bin/bash
+
+RUN /opt/conda/bin/conda install -yc conda-forge transformers
