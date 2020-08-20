@@ -9,6 +9,7 @@ RUN apt-get install -y \
         zip p7zip-full p7zip-rar pigz zlib1g-dev \
         imagemagick ffmpeg libjpeg-dev libturbojpeg libjpeg8-dev \
         iotop htop tmux ncdu vim \
+        gnupg2 pass \
         libsixel-bin libsixel-dev libsixel1 \
         docker.io docker-compose
 
