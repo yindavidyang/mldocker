@@ -8,7 +8,7 @@ RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86
    echo "conda activate base" >> ~/.bashrc
 
 RUN /opt/conda/bin/conda install -yc conda-forge tensorflow-gpu
-RUN /opt/conda/bin/conda install -yc pytorch=1.6 pytorch torchvision torchaudio
+RUN /opt/conda/bin/conda install -yc pytorch pytorch=1.6 torchvision torchaudio
 RUN /opt/conda/bin/conda install -yc fastai fastai
 
 RUN /opt/conda/bin/conda install -yc conda-forge \
