@@ -6,23 +6,24 @@ RUN /opt/conda/bin/conda install -yc fastai fastai=1.0.61
 
 RUN /opt/conda/bin/conda install -yc conda-forge \
     cython future coverage pytest-mock mock \
-    graphviz pydot libjpeg-turbo \
-    ffmpeg-python youtube-dl librosa \
-    opencv tensorboardx \
-    seaborn plotly dask dask-image scikit-learn scikit-image \
+    ffmpeg-python youtube-dl librosa graphviz pydot libjpeg-turbo \
+    seaborn plotly dask dask-image scikit-learn scikit-image gdcm opencv \
     munch pyarrow keyrings.alt \
     xgboost lightgbm catboost mlxtend shap lime \
     uvicorn starlette aiohttp omegaconf fire python-graphviz pydicom pycocotools \
-    kornia transformers onnx
+    kornia transformers onnx \
+    wikipedia elasticsearch
 
-RUN /opt/conda/bin/pip install \
+RUN /opt/conda/bin/pip install --no-cache-dir \
     efficientnet-pytorch pretrainedmodels timm object-detection-fastai \
     libsixel-python fastai2 fastdot nbdev nlp \
     onnx_coreml onnxruntime-gpu \
     knockknock distro
 
-RUN /opt/conda/bin/pip install fastcore==1.0.0
+RUN /opt/conda/bin/pip install --no-cache-dir fastcore==1.0.0 nbdev==1.0.10
 
 COPY sixel.py /opt/conda/lib/python3.7/site-packages/fastai/
+
+RUN /opt/conda/bin/conda clean -ya
 
 CMD ["bash"]

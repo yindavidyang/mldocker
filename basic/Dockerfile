@@ -1,6 +1,6 @@
-FROM nvidia/cuda:10.2-cudnn8-devel-ubuntu18.04
+FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
 
-RUN apt-get update && apt-get -y upgrade && apt-get install -y apt-utils
+RUN apt-get update && apt-get -y upgrade && apt-get install -y apt-utils apt-transport-https
 
 RUN apt-get install -y \
         net-tools iputils-ping ftp \
@@ -11,6 +11,12 @@ RUN apt-get install -y \
         iotop htop tmux ncdu vim \
         libsixel-bin libsixel-dev libsixel1 \
         docker.io docker-compose
+
+RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+
+RUN echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
+
+RUN apt-get update && apt-get install elasticsearch
 
 RUN apt-get autoremove -y
 
@@ -27,7 +33,10 @@ RUN /opt/conda/bin/conda install -yc conda-forge \
 
 RUN /opt/conda/bin/ipcluster nbextension enable
 
-RUN /opt/conda/bin/pip install \
+RUN /opt/conda/bin/pip install --no-cache-dir \
     gpustat
+
+RUN apt-get clean
+RUN /opt/conda/bin/conda clean -ya
 
 CMD ["bash"]
