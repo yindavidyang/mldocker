@@ -1,12 +1,6 @@
 FROM yinyang/base
 
-RUN /opt/conda/bin/conda install -yc conda-forge cudatoolkit=11.0 \
-    && /opt/conda/bin/conda clean -ya
-
-RUN /opt/conda/bin/conda install -yc conda-forge -c nvidia cudnn=8 \
-    && /opt/conda/bin/conda clean -ya
-
-RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch pytorch=1.7 torchvision torchaudio torchtext \
+RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch pytorch=1.7 torchvision torchaudio torchtext cpuonly \
     && /opt/conda/bin/conda clean -ya
 
 RUN /opt/conda/bin/conda install -yc conda-forge \
@@ -28,9 +22,7 @@ RUN /opt/conda/bin/imageio_download_bin freeimage
 RUN /opt/conda/bin/pip install --no-cache-dir \
     tf-nightly tfds-nightly tfa-nightly transformers \
     efficientnet-pytorch pretrainedmodels timm object-detection-fastai nlp pandarallel monai \
-    onnx_coreml onnxruntime-gpu \
+    onnx_coreml onnxruntime \
     knockknock distro libsixel-python
-
-RUN /opt/conda/bin/imageio_download_bin freeimage
 
 CMD ["bash"]

@@ -4,6 +4,8 @@ ENV TZ=Asia/Qatar
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+
 RUN apt-get update \
     && apt-get -y upgrade \
     && apt-get install -y apt-utils apt-transport-https \
@@ -15,11 +17,13 @@ RUN apt-get install -y \
         curl wget gcp axel pv \
         zip p7zip-full p7zip-rar pigz zlib1g-dev \
         imagemagick ffmpeg libjpeg-dev libturbojpeg libjpeg8-dev \
-        iotop htop tmux ncdu vim nano \
+        iotop htop tmux ncdu vim nano ttf-mscorefonts-installer \
         libsixel-bin libsixel-dev libsixel1 \
         docker.io docker-compose \
     && apt-get autoremove -y \
     && apt-get clean
+
+RUN curl -sLf https://spacevim.org/install.sh | bash
 
 RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
 
@@ -37,7 +41,7 @@ RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86
    echo "conda activate base" >> ~/.bashrc
 
 RUN /opt/conda/bin/conda install -yc conda-forge \
-        python=3.7 \
+        python=3.7 gdown \
         jupyter ipython=7 ipyparallel jupyter_contrib_nbextensions nb_conda jupyterthemes \
     && /opt/conda/bin/conda clean -ya
 
@@ -53,6 +57,6 @@ RUN /opt/conda/bin/ipcluster nbextension enable \
 COPY 00_startup.py /root/.ipython/profile_default/startup/
 
 RUN /opt/conda/bin/pip install --no-cache-dir \
-    gpustat
+    gpustat bpytop
 
 CMD ["bash"]
