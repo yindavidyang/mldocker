@@ -4,11 +4,9 @@ ENV TZ=Asia/Qatar
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
 
-# ENV DEBIAN_FRONTEND=noninteractive
-
 RUN apt-get update \
     && apt-get -y upgrade \
-    && apt-get install -y apt-utils apt-transport-https \
+    && apt-get install -y apt-utils apt-transport-https apt-file \
     && apt-get clean
 
 RUN apt-get install -y \
@@ -47,7 +45,7 @@ RUN /opt/conda/bin/conda update -y conda \
     && /opt/conda/bin/conda clean -ya
 
 RUN /opt/conda/bin/conda install -y \
-    python=3.6 dataclasses ipython=7 \
+    python=3.6 dataclasses ipython=7 conda-build anaconda-client gdown \
     jupyter_core pyzmq jupyterthemes ipyparallel notebook jupyter_contrib_core ipywidgets \
     && /opt/conda/bin/conda clean -ya
 
