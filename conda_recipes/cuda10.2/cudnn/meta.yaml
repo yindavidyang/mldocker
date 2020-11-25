@@ -1,0 +1,20 @@
+package:
+   name: cudnn
+   version: 7.6.5
+
+build:
+  number: 999
+
+requirements:
+  run:
+    - cudatoolkit >=10.2,<10.3
+
+# test:
+#   commands:
+#     - test -f ${PREFIX}/lib/libcudnn.so                   # [linux]
+#     - test -f ${PREFIX}/lib/libcudnn.so.7                 # [linux]
+#     - test -f ${PREFIX}/lib/libcudnn.so.7.6.5             # [linux]
+#     - test -f ${PREFIX}/include/cudnn.h                   # [linux]
+
+about:
+  summary: 'CUDA Toolkit Placeholder'

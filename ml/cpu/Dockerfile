@@ -1,4 +1,4 @@
-FROM yinyang/base
+FROM yinyang/base:cpu
 
 RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
         # modeling
@@ -22,7 +22,7 @@ RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
         # serving
         uvicorn starlette aiohttp omegaconf fire onnx=1.8 \
         # deep learning
-        pytorch=1.7 torchvision torchaudio torchtext fastai albumentations nvidia-apex \
+        pytorch=1.7 torchvision torchaudio torchtext cpuonly fastai albumentations nvidia-apex \
         # NLP
         wikipedia elasticsearch nltk \
         # misc
@@ -30,9 +30,9 @@ RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
     && /opt/conda/bin/conda clean -ya
 
 RUN /opt/conda/bin/pip install --no-cache-dir \
-    tf-nightly tfds-nightly tfa-nightly transformers \
+    tf-nightly-gpu tfds-nightly tfa-nightly transformers \
     efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai \
-    onnx_coreml onnxruntime-gpu \
+    onnx_coreml onnxruntime \
     knockknock distro libsixel-python
 
 RUN /opt/conda/bin/imageio_download_bin freeimage

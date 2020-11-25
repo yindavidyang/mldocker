@@ -1,4 +1,4 @@
-FROM yinyang/base
+FROM yinyang/base:cuda10.2
 
 RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
         # modeling
@@ -30,7 +30,7 @@ RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
     && /opt/conda/bin/conda clean -ya
 
 RUN /opt/conda/bin/pip install --no-cache-dir \
-    tf-nightly tfds-nightly tfa-nightly transformers \
+    tensorflow-gpu tensorflow-datasets tensorflow-addons transformers \
     efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai \
     onnx_coreml onnxruntime-gpu \
     knockknock distro libsixel-python

@@ -1,0 +1,25 @@
+package:
+   name: cudatoolkit
+   version: {{ 10.2 }}
+
+build:
+  number: 999
+
+test:
+  requires:
+    - numba
+    - python
+    - setuptools  # for pkg_resources
+  commands:
+    - test ! -f "${PREFIX}/lib/libaccinj64.so"         # [linux]
+    - test ! -f "${PREFIX}/lib/libcuinj64.so"          # [linux]
+
+about:
+  home: https://developer.nvidia.com/cuda-toolkit
+  description: |
+    CUDA is a parallel computing platform and programming model developed by NVIDIA for general computing on graphical processing units (GPUs). With CUDA, developers can dramatically speed up computing applications by harnessing the power of GPUs.
+
+    The CUDA Toolkit from NVIDIA provides everything you need to develop GPU-accelerated applications. This CUDA Toolkit includes GPU-accelerated libraries, and the CUDA runtime for the Conda ecosystem. For the full CUDA Toolkit with a compiler and development tools visit https://developer.nvidia.com/cuda-downloads
+  summary: 'CUDA Toolkit Placeholder'
+  doc_url: https://docs.nvidia.com/cuda/
+  dev_url: https://developer.nvidia.com/cuda-downloads

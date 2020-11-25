@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/l4t-base:r32.4.4
+FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
 
 ENV TZ=Asia/Qatar
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -12,11 +12,9 @@ RUN apt-get update \
 RUN apt-get install -y \
         net-tools iputils-ping ftp build-essential cmake git curl wget gcp axel pv \
         zip p7zip-full p7zip-rar pigz zlib1g-dev \
-        imagemagick ffmpeg \
-        htop tmux ncdu vim nano ttf-mscorefonts-installer \
+        imagemagick ffmpeg htop tmux ncdu vim nano ttf-mscorefonts-installer \
         libsixel-bin libsixel-dev libsixel1 \
         docker.io docker-compose \
-        python3-opencv \
     && apt-get autoremove -y \
     && apt-get clean
 
@@ -26,26 +24,29 @@ RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add 
 RUN echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
 RUN apt-get update \
     && apt-get install elasticsearch \
-    && apt-get clean    
+    && apt-get clean
 
-RUN wget --quiet https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh -O ~/miniconda.sh \
+RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
    && /bin/bash ~/miniconda.sh -b -p /opt/conda \
    && rm ~/miniconda.sh \
    && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
    && echo "conda activate base" >> ~/.bashrc
 
-RUN /opt/conda/bin/conda update -y conda \
+RUN /opt/conda/bin/conda update -yc conda-forge conda \
     && /opt/conda/bin/conda clean -ya
 
-RUN /opt/conda/bin/conda install -yc yinyang \
-        python=3.6 dataclasses cython conda-build conda-verify anaconda-client gdown \
-        jupyter_core ipython=7 pyzmq jupyterthemes ipyparallel notebook jupyter_contrib_core ipywidgets nbconvert=5 \
-        jupyter_latex_envs jupyter_nbextensions_configurator jupyter_highlight_selected_word jupyter_contrib_nbextensions \
+RUN /opt/conda/bin/conda install -yc conda-forge -c yinyang \
+        cudatoolkit=10.2 cudnn=7 \
+    && /opt/conda/bin/conda clean -ya
+
+RUN /opt/conda/bin/conda install -yc conda-forge -c fastai \
+        python=3.7 cython conda-build conda-verify anaconda-client gdown \
+        jupyter ipython=7 ipyparallel jupyter_contrib_nbextensions jupyterthemes nbdev=1 \
     && /opt/conda/bin/conda clean -ya
 
 RUN /opt/conda/bin/pip install --no-cache-dir \
-    bpytop nbdev
+    gpustat bpytop
 
 RUN /opt/conda/bin/ipcluster nbextension enable \
     && /opt/conda/bin/jupyter nbextension enable --py latex_envs \
@@ -58,7 +59,5 @@ RUN /opt/conda/bin/ipcluster nbextension enable \
     && /opt/conda/bin/jt -t monokai -f fira -fs 13 -nf ptsans -nfs 11 -N -kl -cursw 5 -cursc r -cellw 95% -T
 
 COPY 00_startup.py /root/.ipython/profile_default/startup/
-
-RUN cp /usr/lib/python3/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so /opt/conda/lib/python3.6/site-packages/
 
 CMD ["bash"]

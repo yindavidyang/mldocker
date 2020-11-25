@@ -1,6 +1,6 @@
 package:
    name: cudatoolkit
-   version: {{ 11.0 }}
+   version: {{ 10.2 }}
 
 build:
   number: 999

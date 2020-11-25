@@ -1,4 +1,4 @@
-FROM yinyang/base
+FROM yinyang/base:10.2
 
 RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
         # modeling
@@ -6,7 +6,7 @@ RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
         # parallel computing
         dask streamz \
         # plotting
-        seaborn plotly graphviz pydot python-graphviz kornia fastdot \
+        seaborn plotly graphviz pydot python-graphviz kornia \
         # image processing
         dask-image scikit-image opencv accimage libjpeg-turbo \
         # medical imaging
@@ -22,7 +22,7 @@ RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
         # serving
         uvicorn starlette aiohttp omegaconf fire onnx=1.8 \
         # deep learning
-        pytorch=1.7 torchvision torchaudio torchtext fastai albumentations nvidia-apex \
+        pytorch=1.7 torchvision torchaudio torchtext fastai=1.0.61 albumentations nvidia-apex \
         # NLP
         wikipedia elasticsearch nltk \
         # misc
@@ -30,11 +30,18 @@ RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
     && /opt/conda/bin/conda clean -ya
 
 RUN /opt/conda/bin/pip install --no-cache-dir \
-    tf-nightly tfds-nightly tfa-nightly transformers \
-    efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai \
+    tensorflow-gpu tensorflow-datasets tensorflow-addons transformers \
+    efficientnet-pytorch pretrainedmodels timm object-detection-fastai nlp pandarallel monai \
+    libsixel-python fastai2 fastdot fastcore==1.0.0 nbdev==1.0.10 \
     onnx_coreml onnxruntime-gpu \
-    knockknock distro libsixel-python
+    knockknock distro
 
 RUN /opt/conda/bin/imageio_download_bin freeimage
+    
+COPY sixel.py /opt/conda/lib/python3.7/site-packages/fastai/
+RUN /opt/conda/bin/conda uninstall -y --force pillow pil jpeg libtiff libjpeg-turbo
+RUN /opt/conda/bin/conda install -yc conda-forge libjpeg-turbo
+RUN /opt/conda/bin/conda uninstall -y --force pillow
+RUN CFLAGS="${CFLAGS} -mavx2" /opt/conda/bin/pip install --upgrade --no-cache-dir --force-reinstall --no-binary :all: --compile pillow-simd
 
 CMD ["bash"]

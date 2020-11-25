@@ -1,5 +1,7 @@
 FROM yinyang/base:jetson
 
+# failed: bazel
+
 RUN /opt/conda/bin/conda install -yc fastai -c yinyang \
         # modeling
         lightgbm mlxtend scikit-learn shap lime \
@@ -31,7 +33,7 @@ RUN /opt/conda/bin/conda install -yc fastai -c yinyang \
         fastprogress fastscript numba thinc imageio tensorboardx numpy=1.18 scipy=1.4.1 keras-applications qtpy bottleneck numexpr protobuf pkgconfig \
         grpcio sentencepiece=0.1.91 imgaug tokenizers=0.9.3 spacy \
     && /opt/conda/bin/conda clean -ya
-
+    
 # RUN /opt/conda/bin/conda install -y \
 #         future coverage pytest-mock mock numba thinc \
 #         ffmpeg-python graphviz pydot libjpeg-turbo mlxtend lime imageio \
@@ -71,7 +73,7 @@ RUN /opt/conda/bin/pip install --no-cache-dir \
     knockknock distro libsixel-python \
     youtube-dl shapely librosa xgboost kornia \
     uvicorn starlette aiohttp pybind11 futures
-    
+
 RUN /opt/conda/bin/pip install --no-cache-dir --no-deps fastai
 
 RUN /opt/conda/bin/imageio_download_bin freeimage
