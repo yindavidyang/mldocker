@@ -10,11 +10,6 @@ about:
     license: BSD
     summary: 'Matrix Algebra on GPU and Multicore Architectures'
 
-source:
-    fn: magma-{{version}}.tar.gz
-    url: http://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-{{version}}.tar.gz
-    md5: 7f74217e2b668c038054008607fefc7d
-
 requirements:
     build:
         - openblas
@@ -25,3 +20,4 @@ requirements:
 build:
     number: {{build}}
     string: cuda102_{{build}}
+    
