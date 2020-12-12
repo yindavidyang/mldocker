@@ -15,4 +15,5 @@ test:
     - test ! -f "${PREFIX}/lib/libcuinj64.so"          # [linux]
 
 about:
+  description: Placeholder for CUDA Toolkit. This conda package does not install anything.
   summary: 'CUDA Toolkit Placeholder'
