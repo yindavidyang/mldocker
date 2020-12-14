@@ -1,0 +1,24 @@
+{% set name = "torchaudio" %}
+{% set version = "0.7.2" %}
+{% set wheel = "torchaudio-0.7.2-cp36-cp36m-linux_aarch64.whl" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "../dist/{{ wheel }}"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install ./{{ wheel }} -vv"
+
+requirements:
+  build:
+    - conda-build
+    - python
+  host:
+    - python
+  run:
+    - python
+    - pytorch >=1.7.1
