@@ -1,7 +1,8 @@
 FROM nvcr.io/nvidia/l4t-base:r32.4.4
 
 ENV TZ=Asia/Qatar
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
 RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
 
 RUN apt-get update \
@@ -9,8 +10,9 @@ RUN apt-get update \
     && apt-get install -y apt-utils apt-transport-https apt-file \
     && apt-get clean
 
-RUN apt-get install -y \
-        net-tools iputils-ping ftp build-essential cmake git curl wget gcp axel pv \
+RUN apt-get update \
+    && apt-get install -y \
+        net-tools iputils-ping ftp build-essential cmake git curl wget gcp axel pv gfortran \
         zip p7zip-full p7zip-rar pigz zlib1g-dev \
         imagemagick ffmpeg \
         htop tmux ncdu vim nano ttf-mscorefonts-installer \
@@ -35,30 +37,36 @@ RUN wget --quiet https://github.com/conda-forge/miniforge/releases/latest/downlo
    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
    && echo "conda activate base" >> ~/.bashrc
 
-RUN /opt/conda/bin/conda update -y conda \
-    && /opt/conda/bin/conda clean -ya
+ENV PATH="/opt/conda/bin:${PATH}"
 
-RUN /opt/conda/bin/conda install -yc yinyang \
-        python=3.6 dataclasses cython conda-build conda-verify anaconda-client gdown \
+RUN conda update -y conda \
+    && conda clean -ya
+
+RUN conda install -yc yinyang \
+        python=3.6 dataclasses cython conda-build conda-verify anaconda-client gdown xeus-cling \
         jupyter_core ipython=7 pyzmq jupyterthemes ipyparallel notebook jupyter_contrib_core ipywidgets nbconvert=5 \
         jupyter_latex_envs jupyter_nbextensions_configurator jupyter_highlight_selected_word jupyter_contrib_nbextensions \
-    && /opt/conda/bin/conda clean -ya
+    && conda clean -ya
 
-RUN /opt/conda/bin/pip install --no-cache-dir \
+RUN pip install --no-cache-dir \
     bpytop nbdev
 
-RUN /opt/conda/bin/ipcluster nbextension enable \
-    && /opt/conda/bin/jupyter nbextension enable --py latex_envs \
-    && /opt/conda/bin/jupyter nbextension enable --py jupyter_highlight_selected_word \
-    && /opt/conda/bin/jupyter nbextension enable collapsible_headings/main \
-    && /opt/conda/bin/jupyter nbextension enable execute_time/ExecuteTime \
-    && /opt/conda/bin/jupyter nbextension enable varInspector/main \
-    && /opt/conda/bin/jupyter nbextension enable codefolding/main \
-    && /opt/conda/bin/jupyter nbextension enable codefolding/edit \
-    && /opt/conda/bin/jt -t monokai -f fira -fs 13 -nf ptsans -nfs 11 -N -kl -cursw 5 -cursc r -cellw 95% -T
+RUN ipcluster nbextension enable \
+    && jupyter nbextension enable --py latex_envs \
+    && jupyter nbextension enable --py jupyter_highlight_selected_word \
+    && jupyter nbextension enable collapsible_headings/main \
+    && jupyter nbextension enable execute_time/ExecuteTime \
+    && jupyter nbextension enable varInspector/main \
+    && jupyter nbextension enable codefolding/main \
+    && jupyter nbextension enable codefolding/edit \
+    && jt -t monokai -f fira -fs 13 -nf ptsans -nfs 11 -N -kl -cursw 5 -cursc r -cellw 95% -T
 
 COPY 00_startup.py /root/.ipython/profile_default/startup/
 
 RUN cp /usr/lib/python3/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so /opt/conda/lib/python3.6/site-packages/
+
+ENV SHELL=/bin/bash
+RUN mkdir -p /workspace/share
+WORKDIR /workspace
 
 CMD ["bash"]

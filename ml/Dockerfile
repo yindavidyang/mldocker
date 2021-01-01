@@ -1,40 +1,78 @@
 FROM yinyang/base
 
-RUN /opt/conda/bin/conda install -yc conda-forge -c pytorch -c fastai \
-        # modeling
-        xgboost lightgbm catboost mlxtend scikit-learn shap lime \
-        # parallel computing
-        dask streamz \
-        # plotting
-        seaborn plotly graphviz pydot python-graphviz kornia fastdot \
+RUN conda install -y\
+        # fixing version issue
+        scikit-image \
+    && conda clean -ya
+
+RUN conda install -yc pytorch -c fastai \
+        # deep learning
+        pytorch torchvision torchaudio torchtext fastai albumentations nvidia-apex onnx \
+    && conda clean -ya
+
+RUN conda install -y \
         # image processing
-        dask-image scikit-image opencv accimage libjpeg-turbo \
+        dask-image accimage libjpeg-turbo kornia \
+    && conda clean -ya
+
+RUN conda install -y \
+        # plotting
+        seaborn plotly \
+    && conda clean -ya
+
+RUN conda install -y \
         # medical imaging
         pydicom gdcm nibabel \
+    && conda clean -ya
+    
+RUN conda install -y \
+        # modeling
+        xgboost lightgbm catboost mlxtend shap lime \
+        # parallel computing
+        streamz \
+    && conda clean -ya
+
+RUN conda install -y \
+        # audio/video
+        ffmpeg-python youtube-dl librosa pydub \
+        # NLP
+        wikipedia elasticsearch nltk \
+    && conda clean -ya
+
+RUN conda install -y \
         # testing
         coverage pytest-mock mock \
         # building
-        scikit-build bazel \
-        # audio/video
-        ffmpeg-python youtube-dl librosa pydub \
+        scikit-build bazel ninja \
         # data format
-        pycocotools pyarrow=2 h5py=2.10 \
+        pycocotools pyarrow=2 \
+    && conda clean -ya
+
+RUN conda install -y \
         # serving
-        uvicorn starlette aiohttp omegaconf fire onnx=1.8 \
-        # deep learning
-        pytorch=1.7 torchvision torchaudio torchtext fastai albumentations nvidia-apex \
-        # NLP
-        wikipedia elasticsearch nltk \
+        uvicorn starlette aiohttp omegaconf fire \
         # misc
         future munch keyrings.alt \
-    && /opt/conda/bin/conda clean -ya
+    && conda clean -ya
 
-RUN /opt/conda/bin/pip install --no-cache-dir \
-    tf-nightly tfds-nightly tfa-nightly transformers \
-    efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai \
-    onnx_coreml onnxruntime-gpu \
-    knockknock distro libsixel-python
+RUN pip install --no-cache-dir \
+    tensorflow-gpu tensorflow-datasets tensorflow-addons transformers
 
-RUN /opt/conda/bin/imageio_download_bin freeimage
+RUN pip install --no-cache-dir \
+    efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai tsai
+
+RUN pip install --no-cache-dir \
+    onnx_coreml onnxruntime-gpu
+    
+RUN pip install --no-cache-dir \    
+    knockknock distro libsixel-python \
+    fastdot fbprophet
+
+RUN imageio_download_bin freeimage
+
+ENV FASTAI_HOME=/workspace/share/fastai
+ENV TORCH_HOME=/workspace/share/torch
+ENV KERAS_HOME=/workspace/share/keras
+ENV NLTK_DATA=/workspace/share/nltk_data
 
 CMD ["bash"]
