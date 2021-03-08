@@ -1,6 +1,6 @@
 {% set name = "pytorch" %}
-{% set version = "1.7.1" %}
-{% set wheel = "torch-1.7.1-cp36-cp36m-linux_aarch64.whl" %}
+{% set version = "1.8.0" %}
+{% set wheel = "torch-1.8.0-cp36-cp36m-linux_aarch64.whl" %}
 
 package:
   name: "{{ name|lower }}"
@@ -22,8 +22,8 @@ requirements:
   run:
     - openblas
     - magma
-    - numpy >=1.18
-    - python >=3.7,<3.8.0a0
+    - numpy
+    - python >=3.6,<3.7.0a0
     - typing_extensions
 
 about:
@@ -31,3 +31,4 @@ about:
   license: BSD 3-Clause
   license_family: BSD
   summary: PyTorch is an optimized tensor library for deep learning using GPUs and CPUs.
+

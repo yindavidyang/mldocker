@@ -3,8 +3,8 @@ export USE_DISTRIBUTED=0                # skip setting this if you want to enabl
 export USE_QNNPACK=0
 export USE_PYTORCH_QNNPACK=0
 export TORCH_CUDA_ARCH_LIST="5.3;6.2;7.2"
-export PYTORCH_BUILD_VERSION=1.7.1
-export PYTORCH_BUILD_NUMBER=1
+export PYTORCH_BUILD_VERSION=1.8.0
+export PYTORCH_BUILD_NUMBER=0
 
 # ln -s /usr/lib/aarch64-linux-gnu/libcublas.so /opt/conda/lib/libcublas.so
 # export CUDNN_LIB_DIR=/usr/lib/aarch64-linux-gnu
