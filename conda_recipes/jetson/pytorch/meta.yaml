@@ -20,7 +20,7 @@ requirements:
   host:
     - python
   run:
-    - openblas
+    - libopenblas
     - magma
     - numpy
     - python >=3.6,<3.7.0a0
@@ -31,4 +31,3 @@ about:
   license: BSD 3-Clause
   license_family: BSD
   summary: PyTorch is an optimized tensor library for deep learning using GPUs and CPUs.
-

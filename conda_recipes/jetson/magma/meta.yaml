@@ -12,10 +12,10 @@ about:
 
 requirements:
     build:
-        - openblas
+        - libopenblas
 
     run:
-        - openblas
+        - libopenblas
 
 build:
     number: {{build}}

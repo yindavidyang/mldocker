@@ -1,6 +1,6 @@
 {% set name = "torchtext" %}
-{% set version = "0.8.1" %}
-{% set wheel = "torchtext-0.8.1-cp36-cp36m-linux_aarch64.whl" %}
+{% set version = "0.9.0" %}
+{% set wheel = "torchtext-0.9.0-cp36-cp36m-linux_aarch64.whl" %}
 
 package:
   name: "{{ name|lower }}"
@@ -21,4 +21,4 @@ requirements:
     - python
   run:
     - python
-    - pytorch >=1.7.1
+    - pytorch >=1.8.0
