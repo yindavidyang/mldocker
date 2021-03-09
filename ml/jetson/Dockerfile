@@ -22,28 +22,25 @@ RUN conda install -yc fastai -c yinyang \
         # serving
         omegaconf fire onnx=1.8 \
         # deep learning
-        pytorch torchvision torchaudio albumentations fastai \
+        pytorch torchvision torchaudio torchtext albumentations fastai \
         # NLP
         wikipedia elasticsearch nltk \
         # misc
         future munch keyrings.alt \
         # Jetson specific
         fastprogress fastscript numba thinc imageio tensorboardx numpy=1.18 scipy=1.4.1 keras-applications qtpy bottleneck numexpr protobuf pkgconfig \
-        grpcio sentencepiece=0.1.91 imgaug spacy \
+        grpcio=1.32 sentencepiece=0.1.91 imgaug spacy \
     && conda clean -ya
 
 RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate \
-        https://nvidia.box.com/shared/static/6lxbakd8zaf2p5nkgcn7ih116iqm1wzm.whl -O onnxruntime_gpu-1.5.2-cp36-cp36m-linux_aarch64.whl \
-    && pip install --no-cache-dir onnxruntime_gpu-1.5.2-cp36-cp36m-linux_aarch64.whl  \
-    && rm onnxruntime_gpu-1.5.2-cp36-cp36m-linux_aarch64.whl
+        https://nvidia.box.com/shared/static/ukszbm1iklzymrt54mgxbzjfzunq7i9t.whl -O onnxruntime_gpu-1.7.0-cp36-cp36m-linux_aarch64.whl \
+    && pip install --no-cache-dir onnxruntime_gpu-1.7.0-cp36-cp36m-linux_aarch64.whl  \
+    && rm onnxruntime_gpu-1.7.0-cp36-cp36m-linux_aarch64.whl
 
-RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate \
-        https://developer.download.nvidia.com/compute/redist/jp/v44/tensorflow/tensorflow-2.3.0+nv20.9-cp36-cp36m-linux_aarch64.whl \
-    && pip install --no-cache-dir tensorflow-2.3.0+nv20.9-cp36-cp36m-linux_aarch64.whl \
-    && rm tensorflow-2.3.0+nv20.9-cp36-cp36m-linux_aarch64.whl
-   
+RUN pip install --no-cache-dir --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v45 tensorflow
+
 RUN pip install --no-cache-dir \
-    tfds-nightly transformers \
+    tensorflow-datasets transformers \
     efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai \
     onnx_coreml \
     knockknock distro libsixel-python \

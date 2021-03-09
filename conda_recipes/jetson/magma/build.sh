@@ -19,6 +19,9 @@
 # cmake ..
 # make -j $CPU_COUNT
 # make install
-cp /usr/local/lib/libmagma* $PREFIX/lib/
-cp /usr/local/include/magma* $PREFIX/include/
-cp -r /usr/local/lib/pkgconfig/ $PREFIX/lib/
+
+# cp /usr/local/lib/libmagma* $PREFIX/lib/
+# cp /usr/local/include/magma* $PREFIX/include/
+# cp -r /usr/local/lib/pkgconfig/ $PREFIX/lib/
+
+cp -r /usr/local/magma/* $PREFIX/

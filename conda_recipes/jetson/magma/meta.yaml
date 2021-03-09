@@ -11,9 +11,6 @@ about:
     summary: 'Matrix Algebra on GPU and Multicore Architectures'
 
 requirements:
-    build:
-        - libopenblas
-
     run:
         - libopenblas
 
