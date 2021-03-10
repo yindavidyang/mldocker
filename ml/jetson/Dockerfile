@@ -1,35 +1,71 @@
 FROM yinyang/base:jetson
 
-RUN conda install -yc fastai -c yinyang \
-        # modeling
-        lightgbm mlxtend scikit-learn shap lime \
-        # parallel computing
-        dask streamz \
-        # plotting
-        seaborn plotly graphviz pydot python-graphviz fastdot \
+RUN conda install -y \
+        # fixing version issue
+        scikit-image \
+    && conda clean -ya
+
+RUN conda install -yc yinyang \
+        cudatoolkit \
+        # deep learning
+        pytorch torchvision torchaudio torchtext \
+        shapely \        
+        onnx \
+        grpcio=1.32 \
+    && conda clean -ya
+
+RUN conda install -yc fastai \
+        fastprogress fastscript fastai fastdot \
+    && conda clean -ya
+
+RUN conda install -y \
+        albumentations \
+        h5py=2.10 \
+    && conda clean -ya
+
+RUN conda install -y \
         # image processing
-        dask-image scikit-image opencv libjpeg-turbo \
+        dask-image libjpeg-turbo \
+    && conda clean -ya
+
+RUN conda install -y \
+        # plotting
+        seaborn plotly \
+    && conda clean -ya
+
+RUN conda install -yc yinyang \
         # medical imaging
         pydicom gdcm nibabel \
+    && conda clean -ya
+
+RUN conda install -y \
+        # modeling
+        lightgbm mlxtend shap lime \
+        # parallel computing
+        streamz \
+    && conda clean -ya
+
+RUN conda install -y \
+        # audio/video
+        ffmpeg-python youtube-dl pydub \
+        # NLP
+        wikipedia elasticsearch nltk \
+    && conda clean -ya
+
+RUN conda install -y \
         # testing
         coverage pytest-mock mock \
         # building
-        scikit-build pybind11 \
-        # audio/video
-        ffmpeg-python pydub \
+        scikit-build \
         # data format
-        pycocotools pyarrow=2 h5py=2.10 \
+        pycocotools pyarrow=2 \
+    && conda clean -ya
+
+RUN conda install -y \
         # serving
-        omegaconf fire onnx=1.8 \
-        # deep learning
-        pytorch torchvision torchaudio torchtext albumentations fastai \
-        # NLP
-        wikipedia elasticsearch nltk \
+        omegaconf fire \
         # misc
         future munch keyrings.alt \
-        # Jetson specific
-        fastprogress fastscript numba thinc imageio tensorboardx numpy=1.18 scipy=1.4.1 keras-applications qtpy bottleneck numexpr protobuf pkgconfig \
-        grpcio=1.32 sentencepiece=0.1.91 imgaug spacy \
     && conda clean -ya
 
 RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate \
@@ -40,10 +76,18 @@ RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certif
 RUN pip install --no-cache-dir --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v45 tensorflow
 
 RUN pip install --no-cache-dir \
-    tensorflow-datasets transformers \
-    efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai \
-    onnx_coreml \
-    knockknock distro libsixel-python \
+    tensorflow-datasets transformers
+
+RUN pip install --no-cache-dir \
+    efficientnet-pytorch pretrainedmodels timm nlp pandarallel monai tsai
+
+RUN pip install --no-cache-dir \
+    onnx_coreml
+
+RUN pip install --no-cache-dir \
+    knockknock distro libsixel-python
+
+RUN pip install --no-cache-dir \
     youtube-dl shapely librosa xgboost kornia \
     uvicorn starlette aiohttp futures
 
